@@ -1,0 +1,2 @@
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/producer/main.go:11","func":"main.main","level":"info","msg":"Apache-Kafka Producer successed run","time":"2024-01-25T21:32:32+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/producer/main.go:11","func":"main.main","level":"info","msg":"Apache-Kafka Producer successed run","time":"2024-01-25T21:33:07+03:00"}

@@ -1,0 +1,10 @@
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/kafka_admin.go:37","func":"main.runApacheKafka","level":"info","msg":"Like this topic exists already","time":"2024-01-25T21:16:12+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/main.go:12","func":"main.main","level":"info","msg":"Kafka-Admin successed Run","time":"2024-01-25T21:16:12+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/kafka_admin.go:37","func":"main.runApacheKafka","level":"info","msg":"Like this topic exists already","time":"2024-01-25T21:30:05+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/main.go:12","func":"main.main","level":"info","msg":"Kafka-Admin successed Run","time":"2024-01-25T21:30:05+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/kafka_admin.go:37","func":"main.runApacheKafka","level":"info","msg":"Like this topic exists already","time":"2024-01-25T21:31:41+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/main.go:12","func":"main.main","level":"info","msg":"Kafka-Admin successed Run","time":"2024-01-25T21:31:41+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/kafka_admin.go:37","func":"main.runApacheKafka","level":"info","msg":"Like this topic exists already","time":"2024-01-25T21:32:34+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/main.go:12","func":"main.main","level":"info","msg":"Kafka-Admin successed Run","time":"2024-01-25T21:32:34+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/kafka_admin.go:37","func":"main.runApacheKafka","level":"info","msg":"Like this topic exists already","time":"2024-01-25T21:33:09+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/admin/main.go:12","func":"main.main","level":"info","msg":"Kafka-Admin successed Run","time":"2024-01-25T21:33:09+03:00"}
