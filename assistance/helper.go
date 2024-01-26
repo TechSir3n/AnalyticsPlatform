@@ -17,7 +17,6 @@ type Transaction struct {
 }
 
 func GenerateTransaction() Transaction {
-	rand.Seed(time.Now().UnixNano())
 	types := []string{"покупка", "перевод", "списание"}
 	randomType := types[rand.Intn(len(types))]
 
