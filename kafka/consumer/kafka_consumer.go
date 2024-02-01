@@ -13,7 +13,7 @@ func apacheKafkaConsumer() error {
 	config.Consumer.Return.Errors = true
 	config.Consumer.IsolationLevel = sarama.ReadCommitted
 
-	consumer, err := sarama.NewConsumer([]string{os.Getenv("FIRST_BROKER_URL")}, config)
+	consumer, err := sarama.NewConsumer([]string{os.Getenv("FIRST_BROKER_URL"),os.Getenv("SECOND_BROKER_URL")}, config)
 	if err != nil {
 		log.Log.Panic(err)
 	}

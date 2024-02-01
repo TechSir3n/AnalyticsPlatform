@@ -1,0 +1,2 @@
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/consumer/kafka_consumer.go:14","func":"main.apacheKafkaConsumer","level":"error","msg":"dial tcp [::1]:9000: connectex: No connection could be made because the target machine actively refused it.","time":"2024-01-30T13:45:56+03:00"}
+{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/clickhouse/clickhouse_client.go:30","func":"github.com/TechSir3n/analytics-platform/clickhouse.NewClickHouseClient","level":"info","msg":"Success connetec","time":"2024-01-30T13:58:49+03:00"}

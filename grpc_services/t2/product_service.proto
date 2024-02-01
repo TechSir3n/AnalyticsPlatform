@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package t2;
+
+option go_package = "./proto_buffer";
+
+service OrderService {
+    rpc CreaterProduct(OrderRequest) returns (OrderResponse) { }
+}
+
+message OrderRequest { 
+
+}
+
+message OrderResponse { 
+    
+}

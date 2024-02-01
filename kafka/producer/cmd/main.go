@@ -1,8 +1,9 @@
 package main
 
 import (
-	log "github.com/TechSir3n/analytics-platform/logging"
-	"sync"
+	 log "github.com/TechSir3n/analytics-platform/logging"
+	 producer "github.com/TechSir3n/analytics-platform/kafka/producer"
+	 "sync"
 )
 
 func main() {
@@ -13,7 +14,7 @@ func main() {
 	go func(errChan chan<- error, wg *sync.WaitGroup) {
 		defer close(errChan)
 		defer wg.Done()
-		err := apacheKafkaProducer()
+		err := producer.ApacheKafkaProducer()
 		if err != nil {
 			errChan <- err
 		}

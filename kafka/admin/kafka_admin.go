@@ -12,7 +12,7 @@ import (
 func runApacheKafka() error {
 	var config = sarama.NewConfig()
 	config.Version = sarama.V2_7_2_0
-	admin, err := sarama.NewClusterAdmin([]string{os.Getenv("FIRST_BROKER_URL")}, config)
+	admin, err := sarama.NewClusterAdmin([]string{os.Getenv("FIRST_BROKER_URL"),os.Getenv("SECOND_BROKER_URL")}, config)
 	if err != nil {
 		log.Log.Panic("error creating kafka admid: " + err.Error())
 	}
@@ -27,6 +27,7 @@ func runApacheKafka() error {
 		NumPartitions:     3,
 		ReplicationFactor: 1,
 	}
+	
 
 	topics, err := admin.ListTopics()
 	if err != nil {
