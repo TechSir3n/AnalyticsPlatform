@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	pb "github.com/TechSir3n/analytics-platform/grpc_services/t1/proto_buffer"
-	"github.com/TechSir3n/analytics-platform/kafka/producer"
+	 "github.com/TechSir3n/analytics-platform/kafka/producer"
 	"google.golang.org/grpc"
 	"net"
 )
@@ -16,8 +16,8 @@ func newGRPCService() *GRPCServer {
 	return &GRPCServer{}
 }
 
-func (s *GRPCServer) CreaterOrder(ctx context.Context, request *pb.OrderRequest) (*pb.OrderResponse, error) {
-	if request == nil {
+func (s *GRPCServer) HandlerOrder(ctx context.Context, request *pb.OrderRequest) (*pb.OrderResponse, error) {
+	if request.Id == "" && request.Name == "" && request.Type == "" && request.Amount < 0.0 && request.Time == "" {
 		return &pb.OrderResponse{
 			Status:      "ERROR",
 			Description: "Incorrect data request",
@@ -26,7 +26,8 @@ func (s *GRPCServer) CreaterOrder(ctx context.Context, request *pb.OrderRequest)
 
 	order := producer.NewOrderTransaction()
 	producer.SetOrderTransaction(order)
-	order.SetApacheKafka(request.Id, request.Name, request.Type, request.Amount)
+	order.SetApacheKafka(request.Id, request.Name, request.Type, request.Time, request.Amount)
+	order.ApacheKafkaProducerRun()
 
 	return &pb.OrderResponse{
 		Status:      "Success",
@@ -35,7 +36,7 @@ func (s *GRPCServer) CreaterOrder(ctx context.Context, request *pb.OrderRequest)
 }
 
 func (s *GRPCServer) runGRPCService() error {
-	conn, err := net.Listen("tcp", ":8080")
+	conn, err := net.Listen("tcp", ":8010")
 	if err != nil {
 		return err
 	}

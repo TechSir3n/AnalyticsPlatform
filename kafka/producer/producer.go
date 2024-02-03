@@ -14,6 +14,7 @@ type OrderTransaction struct {
 	ID     string
 	Name   string
 	Type   string
+	Time string
 	Amount float64
 }
 
@@ -30,10 +31,11 @@ func getOrderTransaction() *OrderTransaction {
 	return trans 
 }
 
-func (o *OrderTransaction) SetApacheKafka(id, name, Ttype string, amount float64) {
+func (o *OrderTransaction) SetApacheKafka(id, name, Ttype,Time string, amount float64) {
 	o.ID = id
 	o.Name = name
 	o.Type = Ttype
+	o.Time = Time
 	o.Amount = amount
 }
 
@@ -42,11 +44,12 @@ func (o *OrderTransaction) getApacheKafka() *OrderTransaction {
 		ID:     o.ID,
 		Name:   o.Name,
 		Type:   o.Type,
+		Time: o.Time,
 		Amount: o.Amount,
 	}
 }
 
-func ApacheKafkaProducer() error {
+func (o *OrderTransaction) ApacheKafkaProducerRun() error {
 	config := sarama.NewConfig()
 
 	config.Producer.Retry.Max = 5
@@ -89,13 +92,11 @@ func ApacheKafkaProducer() error {
 	if partition, offset, err := producer.SendMessage(message); err != nil {
 		log.Log.Error(err)
 		producer.AbortTxn()
-
 	} else {
 		fmt.Printf("Message sent to partition %d at offset %d", partition, offset)
 		if err = producer.CommitTxn(); err != nil {
 			log.Log.Error(err)
 			producer.AbortTxn()
-
 		}
 	}
 

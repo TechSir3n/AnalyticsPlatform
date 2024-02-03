@@ -6,7 +6,7 @@ option go_package  = "./proto_buffer";
 
 
 service OrderService {
-    rpc CreaterOrder(OrderRequest) returns (OrderResponse) { }
+    rpc HandlerOrder(OrderRequest) returns (OrderResponse) { }
 }
 
 message OrderRequest { 
