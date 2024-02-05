@@ -2,12 +2,14 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"os"
 	"time"
 
 	"github.com/TechSir3n/analytics-platform/assistance"
 	pb "github.com/TechSir3n/analytics-platform/grpc_services/t1/proto_buffer"
+	log "github.com/TechSir3n/analytics-platform/logging"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type GRPClient struct {
@@ -19,10 +21,10 @@ func newGRPClient() *GRPClient {
 	return &GRPClient{}
 }
 
-func (c *GRPClient) runClientGRPC() (string, string, error) {
-	conn, err := grpc.Dial(":8010", grpc.WithInsecure())
+func (c *GRPClient) runClientGRPC() error {
+	conn, err := grpc.Dial(os.Getenv("GRPC_ADDR"), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		return "", "", err
+		return err
 	}
 	defer conn.Close()
 
@@ -32,17 +34,17 @@ func (c *GRPClient) runClientGRPC() (string, string, error) {
 	for range ticker.C {
 		transaction := assistance.GenerateTransaction()
 
-		client := pb.NewOrderServiceClient(conn)
+		client := pb.NewOrderServiceClient(conn)	
 		res, err := client.HandlerOrder(context.Background(),
-			&pb.OrderRequest{Id: transaction.ID, Name: transaction.Name,
-				Type: transaction.Type, Time: transaction.Date.String(), Amount: transaction.Amount})
+			&pb.OrderRequest{Id: transaction.ID, Name: transaction.Name, Type: transaction.Type,
+				Time: transaction.Date.String(), Amount: transaction.Amount})
 		if err != nil {
-			return "", "", err
+			return err
 		}
 
-		fmt.Println(res.Description, res.Status)
+		log.Log.Println(res.Description, res.Status)
 		time.Sleep(time.Second * 2)
 	}
 
-	return "", "", nil
+	return nil
 }

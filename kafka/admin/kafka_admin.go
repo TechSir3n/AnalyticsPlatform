@@ -8,38 +8,38 @@ import (
 	log "github.com/TechSir3n/analytics-platform/logging"
 )
 
-
 func runApacheKafka() error {
 	var config = sarama.NewConfig()
 	config.Version = sarama.V2_7_2_0
-	admin, err := sarama.NewClusterAdmin([]string{os.Getenv("FIRST_BROKER_URL"),os.Getenv("SECOND_BROKER_URL")}, config)
+	admin, err := sarama.NewClusterAdmin([]string{os.Getenv("FIRST_BROKER_URL"), os.Getenv("SECOND_BROKER_URL")}, config)
 	if err != nil {
-		log.Log.Panic("error creating kafka admid: " + err.Error())
+		return err
 	}
 
-	defer func() {
+	defer func() error {
 		if err := admin.Close(); err != nil {
-			log.Log.Error("error closing kafka admin: " + err.Error())
+			return err
 		}
+		return nil
 	}()
 
 	topicDetail := &sarama.TopicDetail{
 		NumPartitions:     3,
 		ReplicationFactor: 1,
+		ConfigEntries:     map[string]*string{},
 	}
-	
 
 	topics, err := admin.ListTopics()
 	if err != nil {
-		log.Log.Panic("Error listing topics: ", err)
+		return err
 	}
 
 	if _, ok := topics[assistance.TopicName]; ok {
 		log.Log.Info("Like this topic exists already")
-	} else {
-		if err := admin.CreateTopic(assistance.TopicName, topicDetail, false); err != nil {
-			log.Log.Panic("Failed to create topic apache Kafka: " + err.Error())
-		}
+	}
+
+	if err := admin.CreateTopic(assistance.TopicName, topicDetail, false); err != nil {
+		return err
 	}
 
 	return nil

@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	hp "github.com/TechSir3n/analytics-platform/assistance"
 	pb "github.com/TechSir3n/analytics-platform/grpc_services/t1/proto_buffer"
-	 "github.com/TechSir3n/analytics-platform/kafka/producer"
+	"github.com/TechSir3n/analytics-platform/kafka/producer"
 	"google.golang.org/grpc"
 	"net"
+	"os"
 )
 
 type GRPCServer struct {
@@ -19,7 +21,7 @@ func newGRPCService() *GRPCServer {
 func (s *GRPCServer) HandlerOrder(ctx context.Context, request *pb.OrderRequest) (*pb.OrderResponse, error) {
 	if request.Id == "" && request.Name == "" && request.Type == "" && request.Amount < 0.0 && request.Time == "" {
 		return &pb.OrderResponse{
-			Status:      "ERROR",
+			Status:      hp.Success,
 			Description: "Incorrect data request",
 		}, nil
 	}
@@ -30,13 +32,13 @@ func (s *GRPCServer) HandlerOrder(ctx context.Context, request *pb.OrderRequest)
 	order.ApacheKafkaProducerRun()
 
 	return &pb.OrderResponse{
-		Status:      "Success",
+		Status:   	hp.Success,
 		Description: "Order created successfuly",
 	}, nil
 }
 
 func (s *GRPCServer) runGRPCService() error {
-	conn, err := net.Listen("tcp", ":8010")
+	conn, err := net.Listen(os.Getenv("GRPC_NETWORK"), os.Getenv("GRPC_ADDR"))
 	if err != nil {
 		return err
 	}

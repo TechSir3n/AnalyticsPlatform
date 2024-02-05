@@ -87,6 +87,7 @@ func (o *OrderTransaction) ApacheKafkaProducerRun() error {
 	message := &sarama.ProducerMessage{
 		Topic: assistance.TopicName,
 		Value: sarama.StringEncoder(fmt.Sprintf("%+v", getOrderTransaction().getApacheKafka())),
+		
 	}
 
 	if partition, offset, err := producer.SendMessage(message); err != nil {

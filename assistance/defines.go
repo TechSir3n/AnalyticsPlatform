@@ -1,4 +1,13 @@
-package assistance 
+package assistance
 
-const LogFile = "log.txt."
-const TopicName = "transaction"
+const (
+	LogFile   = "log.txt."
+	TopicName = "transaction"
+)
+
+const (
+	Success = iota
+	Warning 
+	Error
+	Incorrect 
+)
