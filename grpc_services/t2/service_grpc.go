@@ -4,6 +4,7 @@ import (
 	"context"
 	hp "github.com/TechSir3n/analytics-platform/assistance"
 	pb "github.com/TechSir3n/analytics-platform/grpc_services/t2/proto_buffer"
+	"github.com/TechSir3n/analytics-platform/kafka/producer"
 	"google.golang.org/grpc"
 	"net"
 	"os"
@@ -25,7 +26,9 @@ func (*GRPCService) CreaterProduct(ctx context.Context, request *pb.ProductReque
 		}, nil
 	}
 
-	
+	apache := producer.OrderAndProduct{}
+	apache.Product.SetData(request.Id, request.Name, float64(request.Price), request.Quantity)
+	producer.SetObject(&apache)
 
 	return &pb.ProductResponse{
 		Status:      hp.Success,

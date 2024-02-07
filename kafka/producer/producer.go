@@ -18,6 +18,29 @@ type OrderTransaction struct {
 	Amount float64
 }
 
+type Product struct {
+	ID       string
+	Name     string
+	Price    float64
+	Quantity int64
+}
+
+type OrderAndProduct struct {
+	Order   *OrderTransaction
+	Product *Product
+}
+
+func (p *Product) SetData(id, name string, price float64, quantity int64) {
+	p.ID = id
+	p.Name = name
+	p.Price = price
+	p.Quantity = quantity
+}
+
+func (p *Product) GetData() (string, string, float64, int64) {
+	return p.ID, p.Name, p.Price, p.Quantity
+}
+
 func (ot *OrderTransaction) SetData(id, name, Ttype, time string, amount float64) {
 	ot.ID = id
 	ot.Name = name
@@ -30,11 +53,11 @@ func (ot *OrderTransaction) GetData() (string, string, string, string, float64) 
 	return ot.ID, ot.Name, ot.Type, ot.Time, ot.Amount
 }
 
-func SetOrderObject(_order *OrderTransaction) {
+func SetObject(_order *OrderAndProduct) {
 	_order.ApacheKafkaProducerRun()
 }
 
-func (ot *OrderTransaction) ApacheKafkaProducerRun() error {
+func (ot *OrderAndProduct) ApacheKafkaProducerRun() error {
 	config := sarama.NewConfig()
 
 	config.Producer.Retry.Max = 5
@@ -69,10 +92,13 @@ func (ot *OrderTransaction) ApacheKafkaProducerRun() error {
 		log.Log.Error(err)
 	}
 
-	id, name, Ttype, time, amount := ot.GetData()
+	id, name, Ttype, time, amount := ot.Order.GetData()
+	id_product, name_product, price_product, quantity_product := ot.Product.GetData()
+
 	message := &sarama.ProducerMessage{
 		Topic: assistance.TopicName,
-		Value: sarama.StringEncoder(fmt.Sprintf("%s %s %s %s %f", id, name, Ttype, time, amount)),
+		Value: sarama.StringEncoder(fmt.Sprintf("Orders: %s %s %s %s %f\n Products: %s %s %f %d ",
+			id, name, Ttype, time, amount, id_product, name_product, price_product, quantity_product)),
 	}
 
 	if partition, offset, err := producer.SendMessage(message); err != nil {
