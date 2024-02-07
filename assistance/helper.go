@@ -2,6 +2,7 @@ package assistance
 
 import (
 	"errors"
+	"github.com/TechSir3n/analytics-platform/assistance/models"
 	"github.com/google/uuid"
 	"github.com/joho/godotenv"
 	"log"
@@ -11,24 +12,25 @@ import (
 	"time"
 )
 
-type Transaction struct {
-	ID     string
-	Name   string
-	Type   string
-	Amount float64
-	Date   time.Time
-}
-
-func GenerateTransaction() Transaction {
+func GenerateTransaction() models.Transaction {
 	types := []string{"покупка", "перевод", "списание"}
 	randomType := types[rand.Intn(len(types))]
 
-	amount := rand.Float64() * 1000
+	amount := rand.Float64() * 100000000
 	date := time.Now()
 	userID := uuid.New()
 	name := "Transaction_" + userID.String()
 
-	return Transaction{ID: userID.String(), Name: name, Type: randomType, Amount: amount, Date: date}
+	return models.Transaction{ID: userID.String(), Name: name, Type: randomType, Amount: amount, Date: date}
+}
+
+func GenerateProduct() models.Product {
+	productID := uuid.New()
+	nameProduct := "Product_" + productID.String()
+	price := rand.Float64() * 1000000
+	quantity := rand.Intn(10)
+
+	return models.Product{ID: productID.String(), Name: nameProduct, Price: price, Quantity: quantity}
 }
 
 func init() {

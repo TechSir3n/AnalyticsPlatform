@@ -31,19 +31,23 @@ func (c *GRPClient) runClientGRPC() error {
 	ticker := time.NewTicker(time.Second * 5)
 	defer ticker.Stop()
 
+	client := pb.NewOrderServiceClient(conn)
+
 	for range ticker.C {
 		transaction := assistance.GenerateTransaction()
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+		defer cancel()
 
-		client := pb.NewOrderServiceClient(conn)	
-		res, err := client.HandlerOrder(context.Background(),
+		res, err := client.HandlerOrder(ctx,
 			&pb.OrderRequest{Id: transaction.ID, Name: transaction.Name, Type: transaction.Type,
 				Time: transaction.Date.String(), Amount: transaction.Amount})
 		if err != nil {
-			return err
+			log.Log.Error("Error while calling HandlerOrder: ", err)
+			continue
 		}
 
 		log.Log.Println(res.Description, res.Status)
-		time.Sleep(time.Second * 2)
+		time.Sleep(time.Second * 4)
 	}
 
 	return nil

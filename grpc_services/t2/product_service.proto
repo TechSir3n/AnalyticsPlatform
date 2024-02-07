@@ -4,14 +4,18 @@ package t2;
 
 option go_package = "./proto_buffer";
 
-service OrderService {
-    rpc CreaterProduct(OrderRequest) returns (OrderResponse) { }
+service ProductService {
+    rpc CreaterProduct(ProductRequest) returns (ProductResponse) { }
 }
 
-message OrderRequest { 
-
+message ProductRequest { 
+    string id = 1;
+    string name = 2;
+    float price = 3;
+    int64 quantity = 4;
 }
 
-message OrderResponse { 
-    
+message ProductResponse { 
+    int64 status = 1;
+    string description = 2;
 }

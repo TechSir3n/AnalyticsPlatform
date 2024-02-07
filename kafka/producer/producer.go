@@ -14,42 +14,27 @@ type OrderTransaction struct {
 	ID     string
 	Name   string
 	Type   string
-	Time string
+	Time   string
 	Amount float64
 }
 
-func NewOrderTransaction() *OrderTransaction {
-	return &OrderTransaction{}
+func (ot *OrderTransaction) SetData(id, name, Ttype, time string, amount float64) {
+	ot.ID = id
+	ot.Name = name
+	ot.Type = Ttype
+	ot.Time = time
+	ot.Amount = amount
 }
 
-var trans *OrderTransaction
-func  SetOrderTransaction(o *OrderTransaction){
-	trans = o
+func (ot *OrderTransaction) GetData() (string, string, string, string, float64) {
+	return ot.ID, ot.Name, ot.Type, ot.Time, ot.Amount
 }
 
-func getOrderTransaction() *OrderTransaction { 
-	return trans 
+func SetOrderObject(_order *OrderTransaction) {
+	_order.ApacheKafkaProducerRun()
 }
 
-func (o *OrderTransaction) SetApacheKafka(id, name, Ttype,Time string, amount float64) {
-	o.ID = id
-	o.Name = name
-	o.Type = Ttype
-	o.Time = Time
-	o.Amount = amount
-}
-
-func (o *OrderTransaction) getApacheKafka() *OrderTransaction {
-	return &OrderTransaction{
-		ID:     o.ID,
-		Name:   o.Name,
-		Type:   o.Type,
-		Time: o.Time,
-		Amount: o.Amount,
-	}
-}
-
-func (o *OrderTransaction) ApacheKafkaProducerRun() error {
+func (ot *OrderTransaction) ApacheKafkaProducerRun() error {
 	config := sarama.NewConfig()
 
 	config.Producer.Retry.Max = 5
@@ -84,10 +69,10 @@ func (o *OrderTransaction) ApacheKafkaProducerRun() error {
 		log.Log.Error(err)
 	}
 
+	id, name, Ttype, time, amount := ot.GetData()
 	message := &sarama.ProducerMessage{
 		Topic: assistance.TopicName,
-		Value: sarama.StringEncoder(fmt.Sprintf("%+v", getOrderTransaction().getApacheKafka())),
-		
+		Value: sarama.StringEncoder(fmt.Sprintf("%s %s %s %s %f", id, name, Ttype, time, amount)),
 	}
 
 	if partition, offset, err := producer.SendMessage(message); err != nil {

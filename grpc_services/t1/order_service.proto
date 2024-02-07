@@ -18,6 +18,6 @@ message OrderRequest {
 }
 
 message OrderResponse { 
-    int64 status = 2;
-    string description = 3;
+    int64 status = 1;
+    string description = 2;
 }

@@ -9,6 +9,6 @@ func main() {
 	if err := serv.runGRPCService(); err != nil {
 		panic(err)
 	} else {
-		log.Log.Info("Success run the first microservice")
+		log.Log.Info("Success run the OrderMicroserivce")
 	}
 }

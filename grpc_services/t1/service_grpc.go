@@ -26,13 +26,12 @@ func (s *GRPCServer) HandlerOrder(ctx context.Context, request *pb.OrderRequest)
 		}, nil
 	}
 
-	order := producer.NewOrderTransaction()
-	producer.SetOrderTransaction(order)
-	order.SetApacheKafka(request.Id, request.Name, request.Type, request.Time, request.Amount)
-	order.ApacheKafkaProducerRun()
+	apache := producer.OrderTransaction{}
+	apache.SetData(request.Id, request.Name, request.Type, request.Time, request.Amount)
+	producer.SetOrderObject(&apache)
 
 	return &pb.OrderResponse{
-		Status:   	hp.Success,
+		Status:      hp.Success,
 		Description: "Order created successfuly",
 	}, nil
 }
