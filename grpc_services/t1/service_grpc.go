@@ -27,7 +27,7 @@ func (s *GRPCServer) HandlerOrder(ctx context.Context, request *pb.OrderRequest)
 	}
 
 	apache := producer.OrderAndProduct{}
-	apache.Order.SetData(request.Id, request.Name, request.Type, request.Time, request.Amount)
+	apache.SetDataTrans(request.Id, request.Name, request.Type, request.Time, request.Amount)
 	producer.SetObject(&apache)
 
 	return &pb.OrderResponse{

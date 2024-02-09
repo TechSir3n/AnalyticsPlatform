@@ -27,7 +27,7 @@ func (*GRPCService) CreaterProduct(ctx context.Context, request *pb.ProductReque
 	}
 
 	apache := producer.OrderAndProduct{}
-	apache.Product.SetData(request.Id, request.Name, float64(request.Price), request.Quantity)
+	apache.SetDataProduct(request.Id, request.Name, float64(request.Price), request.Quantity)
 	producer.SetObject(&apache)
 
 	return &pb.ProductResponse{

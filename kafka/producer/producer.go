@@ -30,27 +30,31 @@ type OrderAndProduct struct {
 	Product *Product
 }
 
-func (p *Product) SetData(id, name string, price float64, quantity int64) {
-	p.ID = id
-	p.Name = name
-	p.Price = price
-	p.Quantity = quantity
+func (p *OrderAndProduct) SetDataProduct(id, name string, price float64, quantity int64) {
+	p.Product = &Product{
+		ID:       id,
+		Name:     name,
+		Price:    price,
+		Quantity: quantity,
+	}
 }
 
-func (p *Product) GetData() (string, string, float64, int64) {
-	return p.ID, p.Name, p.Price, p.Quantity
+func (p *OrderAndProduct) GetDataProduct() (string, string, float64, int64) {
+	return p.Product.ID, p.Product.Name, p.Product.Price, p.Product.Quantity
 }
 
-func (ot *OrderTransaction) SetData(id, name, Ttype, time string, amount float64) {
-	ot.ID = id
-	ot.Name = name
-	ot.Type = Ttype
-	ot.Time = time
-	ot.Amount = amount
+func (ot *OrderAndProduct) SetDataTrans(id, name, Ttype, time string, amount float64) {
+	ot.Order = &OrderTransaction{
+		ID:     id,
+		Name:   name,
+		Type:   Ttype,
+		Time:   time,
+		Amount: amount,
+	}
 }
 
-func (ot *OrderTransaction) GetData() (string, string, string, string, float64) {
-	return ot.ID, ot.Name, ot.Type, ot.Time, ot.Amount
+func (ot *OrderAndProduct) GetDataTrans() (string, string, string, string, float64) {
+	return ot.Order.ID, ot.Order.Name, ot.Order.Type, ot.Order.Time, ot.Order.Amount
 }
 
 func SetObject(_order *OrderAndProduct) {
@@ -92,13 +96,13 @@ func (ot *OrderAndProduct) ApacheKafkaProducerRun() error {
 		log.Log.Error(err)
 	}
 
-	id, name, Ttype, time, amount := ot.Order.GetData()
-	id_product, name_product, price_product, quantity_product := ot.Product.GetData()
+	id, name, Ttype, time, amount := ot.GetDataTrans()
+	id_product, name_product, price_product, quantity_product := ot.GetDataProduct()
 
 	message := &sarama.ProducerMessage{
 		Topic: assistance.TopicName,
-		Value: sarama.StringEncoder(fmt.Sprintf("Orders: %s %s %s %s %f\n Products: %s %s %f %d ",
-			id, name, Ttype, time, amount, id_product, name_product, price_product, quantity_product)),
+		Value: sarama.StringEncoder(fmt.Sprintf("Orders: %s %s %s %s %f\n Products: %s %s %f %d", id, name,
+			Ttype, time, amount, id_product, name_product, price_product, quantity_product)),
 	}
 
 	if partition, offset, err := producer.SendMessage(message); err != nil {
