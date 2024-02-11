@@ -12,17 +12,17 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-type GRPClient struct {
+type GRPClientTransaction struct {
 	Status      string
 	Description string
 }
 
-func newGRPClient() *GRPClient {
-	return &GRPClient{}
+func newGRPClientTransaction() *GRPClientTransaction {
+	return &GRPClientTransaction{}
 }
 
-func (c *GRPClient) runClientGRPC() error {
-	conn, err := grpc.Dial(os.Getenv("GRPC_ADDR"), grpc.WithTransportCredentials(insecure.NewCredentials()))
+func (c *GRPClientTransaction) runClientGRPC() error {
+	conn, err := grpc.Dial(os.Getenv("GRPC_ADDR_TRANSACTION"), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return err
 	}
@@ -47,7 +47,6 @@ func (c *GRPClient) runClientGRPC() error {
 		}
 
 		log.Log.Println(res.Description, res.Status)
-		time.Sleep(time.Second * 4)
 	}
 
 	return nil

@@ -24,7 +24,7 @@ func apacheKafkaConsumer() error {
 		}
 	}(consumer)
 
-	consumerPartition, err := consumer.ConsumePartition(assistance.TopicName, 0, sarama.OffsetOldest)
+	consumerPartition, err := consumer.ConsumePartition(assistance.TopicTransaction, 0, sarama.OffsetOldest)
 	if err != nil {
 		log.Log.Panic(err)
 	}

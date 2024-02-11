@@ -1,14 +1,14 @@
 package main
 
 import (
-	"log"
+	log "github.com/TechSir3n/analytics-platform/logging"
+	"fmt"
 )
 
 func main() {
-	grpc := newGRPClient()
+	grpc := newGRPClientTransaction()
 	if err := grpc.runClientGRPC(); err != nil {
-		log.Panic(err)
-	}
-
-	log.Println("Successed run grpClient")
+		log.Log.Panic(err)
+	} 
+	fmt.Println("Success run client grpc[Transaction]")
 }

@@ -2,7 +2,8 @@ package assistance
 
 const (
 	LogFile   = "log.txt."
-	TopicName = "transaction"
+	TopicTransaction = "Transaction"
+	TopicProduct = "Product"
 )
 
 const (

@@ -3,6 +3,7 @@ package main
 import (
 	log "github.com/TechSir3n/analytics-platform/logging"
 	"sync"
+	"fmt"
 )
 
 func main() {
@@ -26,6 +27,8 @@ func main() {
 			log.Log.Error("Error from apacheKafka", err)
 		}
 	}()
+
+	fmt.Println("Success run consumer")
 
 	wg.Wait()
 }
