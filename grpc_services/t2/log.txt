@@ -1,1 +1,0 @@
-{"file":"C:/Users/rusla/OneDrive/Desktop/analytics-platform/kafka/producer/producer.go:38","func":"github.com/TechSir3n/analytics-platform/kafka/producer.SendApacheBrokerProduct","level":"fatal","msg":"Failed to send message: transaction manager: transaction is not ready","time":"2024-02-11T21:29:53+03:00"}

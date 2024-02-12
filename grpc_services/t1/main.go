@@ -8,7 +8,7 @@ import (
 func main() {
 	serv := newGRPCServiceTransaction()
 	if err := serv.runGRPCService(); err != nil {
-		panic(err)
+		log.Log.Panic(err)
 	} else {
 		log.Log.Info("Success run the OrderMicroserivce")
 	}
