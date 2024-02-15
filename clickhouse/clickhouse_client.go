@@ -9,18 +9,10 @@ import (
 	"time"
 )
 
-type Transaction struct {
-	ID     string
-	Name   string
-	Type   string
-	Amount float64
-	Date   time.Time
-}
-
 type Database interface {
-	InsertData(id, name, tType string, amount, price, revenue, benefit float64, date string) error
+	InsertData(id,quantity uint64, name, tType string, amount, price, revenue, benefit float64, date string) error
 	UpdateData() error
-	GetData(id int64) error
+	GetData(id int64) (string,string,float64,string,error) 
 	DeleteData(id int64) error
 }
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/IBM/sarama"
 	"github.com/TechSir3n/analytics-platform/assistance"
+	_ "github.com/TechSir3n/analytics-platform/clickhouse"
 	// processor "github.com/TechSir3n/analytics-platform/data_processing"
 	log "github.com/TechSir3n/analytics-platform/logging"
 	"os"
