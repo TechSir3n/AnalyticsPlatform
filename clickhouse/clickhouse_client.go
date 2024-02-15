@@ -13,6 +13,7 @@ type Database interface {
 	InsertData(id,quantity uint64, name, tType string, amount, price, revenue, benefit float64, date string) error
 	UpdateData() error
 	GetData(id int64) (string,string,float64,string,error) 
+	GetAllData() error 
 	DeleteData(id int64) error
 }
 

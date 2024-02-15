@@ -51,6 +51,11 @@ func (c *AnalyticsPlatformDB) GetData(id int64) (string, string, float64, string
 	return date, strconv.FormatFloat(revenue, 'f', -1, 64), benefit, "", nil
 }
 
+func (c *AnalyticsPlatformDB) GetAllData() error {
+
+	return nil
+}
+
 func (c *AnalyticsPlatformDB) DeleteData(id int64) error {
 	_, err := c.db.Exec("DELETE * FROM AnalyticsPlatform WHERE id = $1", id)
 	if err != nil {

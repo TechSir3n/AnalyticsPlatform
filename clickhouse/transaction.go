@@ -56,6 +56,11 @@ func (c *TransactionDB) GetData(id int64) (string, string, float64, string, erro
 	return customer_name, transaction_type, amount, transaction_date, nil
 }
 
+func (c *TransactionDB) GetAllData() error {
+
+	return nil
+}
+
 func (c *TransactionDB) DeleteData(id int64) error {
 	_, err := c.db.Exec("DELETE * FROM Transaction WHERE order_id = $1", id)
 	if err != nil {

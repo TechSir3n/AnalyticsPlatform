@@ -43,6 +43,12 @@ func (c *ProductDB) GetData(id int64) (string, string, float64, string, error) {
 
 	return product_name, strconv.FormatUint(price, 10), 0.0, strconv.FormatUint(quantity, 10), nil
 }
+
+func (c *ProductDB) GetAllData() error {
+
+	return nil
+}
+
 func (c *ProductDB) DeleteData(id int64) error {
 	_, err := c.db.Exec("DELETE * FROM Product WHERE product_id = $1", id)
 	if err != nil {
